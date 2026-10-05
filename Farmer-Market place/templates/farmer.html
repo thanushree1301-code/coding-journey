@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Farmer Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>👨‍🌾 Farmer Dashboard</h1>
+
+    <a href="/">Home</a>
+    |
+    <a href="/buyer">Buyer Page</a>
+    |
+    <a href="/admin">Admin</a>
+
+</header>
+
+
+<div class="container">
+
+    <!-- FARMER REGISTRATION -->
+
+    <h2>👨‍🌾 Register as Farmer</h2>
+
+    <form action="/register_farmer" method="POST">
+
+        <label>Farmer Name</label>
+
+        <input type="text"
+               name="name"
+               required>
+
+        <label>Mobile Number</label>
+
+        <input type="text"
+               name="phone"
+               required>
+
+        <label>Location</label>
+
+        <input type="text"
+               name="location"
+               required>
+
+        <label>Crops</label>
+
+        <input type="text"
+               name="crops"
+               placeholder="Example: Tomato, Onion">
+
+        <button type="submit">
+            Submit for Verification
+        </button>
+
+    </form>
+
+
+    <hr>
+
+
+    <!-- FARMERS -->
+
+    <h2>Registered Farmers</h2>
+
+    {% for farmer in farmers %}
+
+        <div class="card">
+
+            <h3>{{ farmer["name"] }}</h3>
+
+            <p>
+                📱 {{ farmer["phone"] }}
+            </p>
+
+            <p>
+                📍 {{ farmer["location"] }}
+            </p>
+
+            {% if farmer["verified"] == 1 %}
+
+                <p>🟢 <b>Verified Farmer</b></p>
+
+            {% else %}
+
+                <p>⏳ <b>Verification Pending</b></p>
+
+            {% endif %}
+
+        </div>
+
+    {% endfor %}
+
+
+    <hr>
+<div class="verified-box">
+    <h2>✅ Verified Farmer</h2>
+
+    <p>
+        Welcome, <strong>{{ farmer_name }}</strong>!
+    </p>
+
+    <p>
+        Your farmer account has been verified by the admin.
+        You can now add and sell your products.
+    </p>
+</div>
+
+    <!-- ADD PRODUCT -->
+
+    <h2>🥕 Add Your Product</h2>
+
+    <p>
+        Only verified farmers can add products.
+    </p>
+
+    <form action="/add_product" method="POST">
+
+        <label>Select Verified Farmer</label>
+
+        <select name="farmer_id" required>
+
+            <option value="">
+                Select Farmer
+            </option>
+
+            {% for farmer in farmers %}
+
+                {% if farmer["verified"] == 1 %}
+
+                    <option value="{{ farmer['id'] }}">
+
+                        {{ farmer["name"] }}
+                        - 🟢 Verified
+
+                    </option>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </select>
+
+
+        <label>Product Name</label>
+
+        <input type="text"
+               name="name"
+               placeholder="Example: Tomato"
+               required>
+
+
+        <label>Quantity (kg)</label>
+
+        <input type="number"
+               name="quantity"
+               step="0.1"
+               required>
+
+
+        <label>Price (₹ per kg)</label>
+
+        <input type="number"
+               name="price"
+               step="0.01"
+               required>
+
+
+        <label>Location</label>
+
+        <input type="text"
+               name="location"
+               required>
+
+
+        <button type="submit">
+            Add Product
+        </button>
+
+    </form>
+
+
+    <hr>
+
+
+    <!-- PRODUCTS -->
+
+    <h2>📦 Products</h2>
+
+    {% for product in products %}
+
+        <div class="card">
+
+            <h3>
+                {{ product["name"] }}
+            </h3>
+
+            <p>
+                Quantity:
+                <b>{{ product["quantity"] }} kg</b>
+            </p>
+
+            <p>
+                Price:
+                ₹{{ product["price"] }}/kg
+            </p>
+
+            <p>
+                📍 {{ product["location"] }}
+            </p>
+
+            {% if product["verified"] == 1 %}
+
+                <p>
+                    👨‍🌾 {{ product["farmer_name"] }}
+                    🟢 <b>Verified Farmer</b>
+                </p>
+
+            {% else %}
+
+                <p>
+                    ⚠️ Farmer not verified
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

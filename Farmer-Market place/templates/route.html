@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Route Optimization</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>🚚 Route Optimization</h1>
+
+    <a href="/">Home</a>
+
+</header>
+
+
+<div class="container">
+
+    <h2>Delivery Route Optimizer</h2>
+
+    <p>
+        Enter the farmer's starting location.
+    </p>
+
+
+    <form
+        action="/optimize_route"
+        method="POST"
+    >
+
+        <label>Farmer Latitude</label>
+
+        <input
+            type="number"
+            step="any"
+            name="start_lat"
+            placeholder="Example: 12.9716"
+            required
+        >
+
+
+        <label>Farmer Longitude</label>
+
+        <input
+            type="number"
+            step="any"
+            name="start_lon"
+            placeholder="Example: 77.5946"
+            required
+        >
+
+
+        <button type="submit">
+            🚚 Optimize Route
+        </button>
+
+    </form>
+
+
+    {% if route %}
+
+    <h2>Optimized Delivery Route</h2>
+
+    <div class="product-card">
+
+        <h3>🚜 Recommended Order</h3>
+
+        <ol>
+
+            {% for stop in route %}
+
+            <li>
+
+                <strong>
+                    {{ stop["buyer_name"] }}
+                </strong>
+
+                -
+
+                {{ stop["location"] }}
+
+                <br>
+
+                Distance from previous stop:
+                {{ stop["distance"] }} km
+
+            </li>
+
+            {% endfor %}
+
+        </ol>
+
+
+        <h3>
+            📏 Total Distance:
+            {{ total_distance }} km
+        </h3>
+
+    </div>
+
+    {% endif %}
+
+
+    <h2>Current Orders</h2>
+
+    <table>
+
+        <tr>
+
+            <th>Buyer</th>
+
+            <th>Product</th>
+
+            <th>Quantity</th>
+
+            <th>Location</th>
+
+        </tr>
+
+
+        {% for order in orders %}
+
+        <tr>
+
+            <td>
+                {{ order["buyer_name"] }}
+            </td>
+
+            <td>
+                {{ order["name"] }}
+            </td>
+
+            <td>
+                {{ order["quantity"] }} kg
+            </td>
+
+            <td>
+                {{ order["location"] }}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+
+</html>

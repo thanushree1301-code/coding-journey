@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Market Intelligence | Farm2Direct</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8f3;
+            color: #243024;
+        }
+
+        /* NAVBAR */
+        nav {
+            background: #166534;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            font-size: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: bold;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #166534, #22c55e);
+            color: white;
+            padding: 55px 7%;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        /* AI INTRO */
+        .ai-box {
+            width: 86%;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .ai-box h2 {
+            color: #166534;
+            margin-bottom: 10px;
+        }
+
+        /* PRODUCT GRID */
+        .products {
+            width: 86%;
+            margin: 30px auto 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+            transition: 0.25s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            background: #e8f5e9;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card h3 {
+            font-size: 24px;
+            color: #166534;
+            margin-bottom: 8px;
+        }
+
+        .farmer {
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .verified {
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        /* AI SECTION */
+        .ai-section {
+            margin-top: 18px;
+            padding: 17px;
+            border-radius: 14px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+        }
+
+        .ai-section h4 {
+            color: #166534;
+            margin-bottom: 12px;
+        }
+
+        .ai-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding-bottom: 7px;
+            border-bottom: 1px solid #dcfce7;
+        }
+
+        .high {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .medium {
+            color: #ca8a04;
+            font-weight: bold;
+        }
+
+        .price {
+            font-size: 25px;
+            font-weight: bold;
+            color: #15803d;
+        }
+
+        .advice {
+            margin-top: 12px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        /* VOICE BUTTON */
+        .voice-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #166534;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .voice-btn:hover {
+            background: #14532d;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #14532d;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav a {
+                margin: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <h2>🌾 Farm2Direct</h2>
+
+    <div>
+        <a href="/">Home</a>
+        <a href="/buyer">Marketplace</a>
+        <a href="/farmer">Farmer</a>
+        <a href="/route">Delivery</a>
+    </div>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+
+    <h1>🤖 AI Market Intelligence</h1>
+
+    <p>
+        Smart market recommendations to help farmers understand
+        demand, fair prices and market trends before selling their crops.
+    </p>
+
+</section>
+
+
+<!-- AI INTRO -->
+<div class="ai-box">
+
+    <h2>🌱 How our AI helps farmers</h2>
+
+    <p>
+        Our AI-assisted marketplace analyzes the product, available
+        quantity and demo market reference data to provide a
+        recommended selling price and demand indication.
+    </p>
+
+    <br>
+
+    <p>
+        💰 <b>Fair Price</b> &nbsp; | &nbsp;
+        📈 <b>Demand Prediction</b> &nbsp; | &nbsp;
+        📊 <b>Market Trend</b> &nbsp; | &nbsp;
+        🎤 <b>Voice Recommendation</b>
+    </p>
+
+</div>
+
+
+<!-- PRODUCTS -->
+<div class="products">
+
+    {% if products %}
+
+        {% for product in products %}
+
+        <div class="card">
+
+            <!-- PRODUCT IMAGE -->
+            <img
+                class="product-image"
+                src="{{ url_for('static', filename='images/' + product.image) }}"
+                alt="{{ product.name }}"
+                onerror="this.src='https://via.placeholder.com/600x400?text=Fresh+Produce'"
+            >
+
+
+            <div class="card-content">
+
+                <h3>🍅 {{ product.name }}</h3>
+
+                <p class="farmer">
+                    👨‍🌾 Farmer:
+                    <b>{{ product.farmer_name }}</b>
+                </p>
+
+                <p class="verified">
+                    ✓ Verified Farmer
+                </p>
+
+                <br>
+
+                <p>
+                    📦 Available:
+                    <b>{{ product.quantity }} kg</b>
+                </p>
+
+                <p>
+                    💵 Farmer's Price:
+                    <b>₹{{ product.price }}/kg</b>
+                </p>
+
+                <p>
+                    📍 {{ product.location }}
+                </p>
+
+
+                <!-- AI INFORMATION -->
+                <div class="ai-section">
+
+                    <h4>🤖 AI Market Analysis</h4>
+
+
+                    <div class="ai-row">
+
+                        <span>Demand</span>
+
+                        <span
+                            class="{% if product.ai.demand == 'High' %}
+                            high
+                            {% else %}
+                            medium
+                            {% endif %}"
+                        >
+                            {{ product.ai.demand }}
+                            {% if product.ai.demand == 'High' %}
+                                🔥
+                            {% else %}
+                                📊
+                            {% endif %}
+                        </span>
+
+                    </div>
+
+
+                    <div class="ai-row">
+
+                        <span>Market Trend</span>
+
+                        <b>
+                            {{ product.ai.trend }}
+                        </b>
+
+                    </div>
+
+
+                    <div class="ai-row">
+
+                        <span>Reference Price</span>
+
+                        <b>
+                            ₹{{ product.ai.base_price }}/kg
+                        </b>
+
+                    </div>
+
+
+                    <div style="margin-top:14px;">
+
+                        <small>
+                            AI Recommended Fair Price
+                        </small>
+
+                        <div class="price">
+                            ₹{{ product.ai.recommended }}/kg
+                        </div>
+
+                        <small>
+                            Suggested range:
+                            {{ product.ai.range }}
+                        </small>
+
+                    </div>
+
+
+                    <!-- AI ADVICE -->
+                    <p class="advice">
+                        💡 {{ product.ai.advice }}
+                    </p>
+
+
+                    <!-- VOICE -->
+                    <button
+                        class="voice-btn"
+                        onclick="speakRecommendation(
+                            '{{ product.name }}',
+                            '{{ product.quantity }}',
+                            '{{ product.location }}'
+                        )"
+                    >
+                        🎤 Listen to AI Recommendation
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="ai-box">
+
+            <h2>🌱 No products available yet</h2>
+
+            <p>
+                Verified farmers need to add products before
+                AI market analysis can be displayed.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <p>
+        🌾 Farm2Direct — Direct Farmer-to-Buyer Marketplace
+    </p>
+
+    <p style="margin-top:8px;">
+        🤖 AI-assisted market intelligence for smarter selling
+    </p>
+
+</footer>
+
+
+<script>
+
+async function speakRecommendation(name, quantity, location) {
+
+    try {
+
+        const response = await fetch(
+            `/ai/voice?name=${encodeURIComponent(name)}&quantity=${encodeURIComponent(quantity)}&location=${encodeURIComponent(location)}`
+        );
+
+        const data = await response.json();
+
+        if ("speechSynthesis" in window) {
+
+            window.speechSynthesis.cancel();
+
+            const speech =
+                new SpeechSynthesisUtterance(data.text);
+
+            speech.lang = "en-IN";
+            speech.rate = 0.9;
+            speech.pitch = 1;
+
+            window.speechSynthesis.speak(speech);
+
+        } else {
+
+            alert(data.text);
+
+        }
+
+    } catch (error) {
+
+        alert(
+            "Unable to get AI recommendation. Please try again."
+        );
+
+        console.error(error);
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

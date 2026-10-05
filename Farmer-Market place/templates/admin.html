@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Admin Dashboard</title>
+
+</head>
+
+<body>
+
+<h1>👮 Admin Dashboard</h1>
+
+<a href="/farmer">Farmer Page</a>
+|
+<a href="/buyer">Buyer Page</a>
+
+
+<hr>
+
+
+<h2>👨‍🌾 Farmer Verification</h2>
+
+
+{% for farmer in farmers %}
+
+<div>
+
+    <h3>{{ farmer["name"] }}</h3>
+
+    <p>
+        📱 {{ farmer["phone"] }}
+    </p>
+
+    <p>
+        📍 {{ farmer["location"] }}
+    </p>
+
+    <p>
+        🌾 Crops: {{ farmer["crops"] }}
+    </p>
+
+
+    {% if farmer["verified"] == 1 %}
+
+        <p>
+            🟢 <b>VERIFIED</b>
+        </p>
+
+    {% else %}
+
+        <p>
+            ⏳ <b>VERIFICATION PENDING</b>
+        </p>
+
+
+        <form
+            action="/approve_farmer/{{ farmer['id'] }}"
+            method="POST"
+            style="display:inline;">
+
+            <input
+                type="hidden"
+                name="password"
+                value="{{ password }}">
+
+            <button type="submit">
+                ✅ Approve
+            </button>
+
+        </form>
+
+
+        <form
+            action="/reject_farmer/{{ farmer['id'] }}"
+            method="POST"
+            style="display:inline;">
+
+            <input
+                type="hidden"
+                name="password"
+                value="{{ password }}">
+
+            <button type="submit">
+                ❌ Reject
+            </button>
+
+        </form>
+
+    {% endif %}
+
+</div>
+
+<hr>
+
+{% endfor %}
+
+
+<h2>🚨 Product Reports</h2>
+
+{% for report in reports %}
+
+<div>
+
+    <p>
+        Product:
+        <b>{{ report["product_name"] }}</b>
+    </p>
+
+    <p>
+        Reported by:
+        {{ report["buyer_name"] }}
+    </p>
+
+    <p>
+        Reason:
+        {{ report["reason"] }}
+    </p>
+
+</div>
+
+<hr>
+
+{% endfor %}
+
+</body>
+
+</html>
